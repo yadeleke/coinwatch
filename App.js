@@ -6,13 +6,16 @@
 
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Picker, Item, TouchableOpacity, 
-         Modal, ListView, Image } from 'react-native';
+         Modal, ListView, Image, Dimensions } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 
 const CANCEL_INDEX = 0;
 const DESTRUCTIVE_INDEX = -1;
 const options = [ 'Cancel', 'Bitcoin', 'Iota', 'Litecoin' ];
 const title = "Select coin";
+const { width, height } = Dimensions .get('window');
+const DEVICE_HEIGHT = height;
+const DEVICE_WIDTH = width;
 
 export default class App extends Component<{}> {
   constructor(){
@@ -38,9 +41,10 @@ export default class App extends Component<{}> {
     return (
       <View style={styles.container}>
         <View style={styles.mainLogoContainer}>
-          <Image
-            source={require('./img/logo.png')}
-            style={styles.logo}
+          <Image 
+              style={styles.mainLogo}
+              // source={require('./img/logo.png')}   
+              // resizeMode={'contain'}   
           />
         </View>
         <View style={styles.buttonContainer}>
@@ -59,7 +63,6 @@ export default class App extends Component<{}> {
           destructiveButtonIndex={DESTRUCTIVE_INDEX}
           onPress={this.handlePress}
         />
-      
       </View>
     );
   }
@@ -71,18 +74,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   mainLogoContainer: {
-    flex: 1,
-    justifyContent: 'flex-end',
+    flex : 1,
+    justifyContent: 'flex-end'
   },
-  logo: {
-    width: 350,
-    height: 100,
-    resizeMode: 'contain',
+  mainLogo: {
+    width: width,
   },
   buttonContainer: {
     flex : 1,
-    justifyContent: 'flex-start',
-    paddingHorizontal: 80
+    alignItems: 'center',
+    justifyContent: 'flex-start'
   },
   button: {
     backgroundColor: '#D3D3D3',
