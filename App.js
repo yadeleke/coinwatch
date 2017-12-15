@@ -5,9 +5,9 @@
  */
 
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Picker, Item, Button, Modal, ListView } from 'react-native';
+import { Platform, StyleSheet, Text, View, Picker, Item, TouchableOpacity, 
+         Modal, ListView, Image } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
-import Title from './Title';
 
 const CANCEL_INDEX = 0;
 const DESTRUCTIVE_INDEX = -1;
@@ -37,9 +37,19 @@ export default class App extends Component<{}> {
   render() {
     return (
       <View style={styles.container}>
-        <Title/>
-        <View style={styles.button}>
-          <Button onPress={this.showActionSheet} title="Please select a coin" />
+        <View style={styles.mainLogoContainer}>
+          <Image
+            source={require('./img/logo.png')}
+            style={styles.logo}
+          />
+        </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity 
+            onPress={this.showActionSheet}
+            style={styles.button}
+          >
+            <Text style={{color: '#FFF', fontSize: 20}}>Please select a coin</Text>
+          </TouchableOpacity>
         </View>
         <ActionSheet
           ref={o => this.ActionSheet = o}
@@ -58,14 +68,24 @@ export default class App extends Component<{}> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: 'center',
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  mainLogoContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+  logo: {
+    width: 350,
+    height: 100,
+    resizeMode: 'contain',
+  },
+  buttonContainer: {
+    flex : 1,
+    justifyContent: 'flex-start',
+    paddingHorizontal: 80
   },
   button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  }
+    backgroundColor: '#D3D3D3',
+    padding: 10,
+}
 });
