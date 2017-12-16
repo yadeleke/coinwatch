@@ -5,7 +5,7 @@
  */
 
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Picker, Item, TouchableOpacity, 
+import { AppRegistry, Platform, StyleSheet, Text, View, Picker, Item, TouchableOpacity, 
          Modal, ListView, Image, Dimensions } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 
@@ -17,11 +17,12 @@ const { width, height } = Dimensions .get('window');
 const DEVICE_HEIGHT = height;
 const DEVICE_WIDTH = width;
 
-export default class App extends Component<{}> {
+
+export default class Home extends Component {
   constructor(){
     super();
     this.state = {
-      coin: ''
+      selectedCoin: ''
     }
     this.handlePress = this.handlePress.bind(this);
     this.showActionSheet = this.showActionSheet.bind(this);
@@ -31,10 +32,13 @@ export default class App extends Component<{}> {
     this.ActionSheet.show();
   }
 
-  handlePress(i) {
+  handlePress = (index) => {
+    const {navigate} = this.props.navigation;
+
     this.setState({
-      coin: i
-    })
+      selectedCoin: options[index]
+     })    
+     navigate('Details');
   }
 
   render() {
@@ -43,8 +47,8 @@ export default class App extends Component<{}> {
         <View style={styles.mainLogoContainer}>
           <Image 
               style={styles.mainLogo}
-              // source={require('./img/logo.png')}   
-              // resizeMode={'contain'}   
+              source={require('../img/logo.png')}   
+              resizeMode={'contain'}   
           />
         </View>
         <View style={styles.buttonContainer}>
@@ -72,6 +76,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    backgroundColor: '#FFF'
   },
   mainLogoContainer: {
     flex : 1,

@@ -1,4 +1,4 @@
+import Navigation from './config/router';
 import { AppRegistry } from 'react-native';
-import App from './App';
 
-AppRegistry.registerComponent('coinwatch', () => App);
+AppRegistry.registerComponent('coinwatch', () => Navigation);
