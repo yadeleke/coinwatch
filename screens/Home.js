@@ -22,7 +22,7 @@ export default class Home extends Component {
   constructor(){
     super();
     this.state = {
-      selectedCoin: ''
+      selectedCoin: null
     }
     this.handlePress = this.handlePress.bind(this);
     this.showActionSheet = this.showActionSheet.bind(this);
@@ -34,11 +34,10 @@ export default class Home extends Component {
 
   handlePress = (index) => {
     const {navigate} = this.props.navigation;
-
     this.setState({
       selectedCoin: options[index]
-     })    
-     navigate('Details');
+     })
+     navigate('Details', {selectedCoin: this.state.selectedCoin});
   }
 
   render() {
