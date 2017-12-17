@@ -7,10 +7,13 @@
     "test": "jest"
   },
   "dependencies": {
+    "app-icon": "^0.6.3",
+    "numeral": "^2.0.6",
     "react": "16.0.0",
     "react-native": "^0.51.0",
     "react-native-actionsheet": "^2.3.0",
     "react-native-elements": "^0.18.5",
+    "react-native-icon": "^0.2.10",
     "react-native-vector-icons": "^4.4.2",
     "react-navigation": "^1.0.0-beta.21"
   },
