@@ -46,34 +46,6 @@ class Feed extends Component {
         })
       });
     }
-  
-     
-    // fetch(url1).then(response => response.json()
-    //           .then(responseJson => {
-    //             this.setState({
-    //               Bitcoin: Numeral(responseJson[0].price_usd).format('$0,0.00')
-    //              })
-    //           }).catch((err) => {
-    //     console.log(err);
-    // })).then(
-    // fetch(url2).then(response => response.json()
-    //           .then(responseJson => {
-    //             this.setState({
-    //               Ethereum: Numeral(responseJson[0].price_usd).format('$0,0.00')
-    //              })
-    //           }).catch((err) => {
-    //     console.log(err);
-    // }))).then(
-    // fetch(url3).then(response => response.json()
-    //           .then(responseJson => {
-    //             this.setState({
-    //               Litecoin: Numeral(responseJson[0].price_usd).format('$0,0.00')
-    //              }) 
-    //           }).catch((err) => {
-    //     console.log(err);
-    // }))).then(() => {
-    //   this.setState({refreshing: false});
-    // });
 
   componentDidMount() {
     this.fetchData();
@@ -94,6 +66,7 @@ class Feed extends Component {
               key={coin.Id}
               roundAvatar
               avatar={{ uri: coin.ImageUrl }}
+              avatarOverlayContainerStyle={{backgroundColor: 'white'}}
               title={coin.FullName} 
               subtitle={this.state[coin.CoinName]}
               onPress={() => this.onLearnMore(coin)}

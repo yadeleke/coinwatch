@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "app-icon": "^0.6.3",
+    "eslint-plugin-react-native": "^3.2.0",
     "numeral": "^2.0.6",
     "react": "16.0.0",
     "react-native": "^0.51.0",
@@ -20,6 +21,9 @@
   "devDependencies": {
     "babel-jest": "21.2.0",
     "babel-preset-react-native": "4.0.0",
+    "eslint": "^4.13.1",
+    "eslint-config-google": "^0.9.1",
+    "eslint-plugin-react": "^7.5.1",
     "jest": "21.2.1",
     "react-test-renderer": "16.0.0"
   },
