@@ -11,16 +11,17 @@ class Feed extends Component {
     this.state = {
       selectedCoin: null,
       coins: null,
-      1 : null,
-      2 : null,
-      3 : null,
-      4 : null,
-      5 : null,
-      6: null,
-      7: null,
-      8: null,
-      9: null,
-      10: null,
+      Bitcoin: null,
+      "1" : null,
+      "2" : null,
+      "3" : null,
+      "4" : null,
+      "5" : null,
+      "6" : null,
+      "7" : null,
+      "8" : null,
+      "9" : null,
+     "10" : null,
       refreshing: true
     }
     this.fetchData = this.fetchData.bind(this);
@@ -116,37 +117,54 @@ class Feed extends Component {
   fetchData(sortedTopCoins){
     if(sortedTopCoins){
       this.setState({
-        coins: sortedTopCoins 
+        coins: sortedTopCoins,
       })
-    }
-    var a = "https://api.coinmarketcap.com/v1/ticker/" + this.state.coins[0].CoinName
-   
+    }   
+
     Promise.all([
-      fetch("https://api.coinmarketcap.com/v1/ticker/" + this.state.coins[0].CoinName),
-      fetch("https://api.coinmarketcap.com/v1/ticker/" + this.state.coins[1].CoinName),
-      fetch("https://api.coinmarketcap.com/v1/ticker/" + this.state.coins[2].CoinName),
-      fetch("https://api.coinmarketcap.com/v1/ticker/" + this.state.coins[3].CoinName),
-      fetch("https://api.coinmarketcap.com/v1/ticker/" + this.state.coins[4].CoinName),
-      fetch("https://api.coinmarketcap.com/v1/ticker/" + this.state.coins[5].CoinName),
-      fetch("https://api.coinmarketcap.com/v1/ticker/" + this.state.coins[6].CoinName),
-      fetch("https://api.coinmarketcap.com/v1/ticker/" + this.state.coins[7].CoinName),
-      fetch("https://api.coinmarketcap.com/v1/ticker/" + this.state.coins[8].CoinName),
-      fetch("https://api.coinmarketcap.com/v1/ticker/" + this.state.coins[9].CoinName),
+      fetch("https://api.coinmarketcap.com/v1/ticker/bitcoin"),
+      fetch("https://api.coinmarketcap.com/v1/ticker/ethereum"),
+      fetch("https://api.coinmarketcap.com/v1/ticker/litecoin"),
     ]).then((responseArray) => Promise.all(responseArray.map(item => item.json()))).then((responseJsonArray) => {
+        console.log(responseJsonArray);
         this.setState({
-          1: Numeral(responseJsonArray[0][0].price_usd).format('$0,0.00'),
-          2: Numeral(responseJsonArray[1][0].price_usd).format('$0,0.00'),
-          3: Numeral(responseJsonArray[2][0].price_usd).format('$0,0.00'),
-          4: Numeral(responseJsonArray[3][0].price_usd).format('$0,0.00'),
-          5: Numeral(responseJsonArray[4][0].price_usd).format('$0,0.00'),
-          6: Numeral(responseJsonArray[5][0].price_usd).format('$0,0.00'),
-          7: Numeral(responseJsonArray[6][0].price_usd).format('$0,0.00'),
-          8: Numeral(responseJsonArray[7][0].price_usd).format('$0,0.00'),
-          9: Numeral(responseJsonArray[8][0].price_usd).format('$0,0.00'),
-          10: Numeral(responseJsonArray[9][0].price_usd).format('$0,0.00'),
+          Bitcoin: Numeral(responseJsonArray[0][0].price_usd).format('$0,0.00'),
+          Ethereum: Numeral(responseJsonArray[1][0].price_usd).format('$0,0.00'),
+          Litecoin: Numeral(responseJsonArray[2][0].price_usd).format('$0,0.00'),
           refreshing: false
         })
       });
+
+  //   Promise.all([
+  //     fetch("https://api.coinmarketcap.com/v1/ticker/" + this.state.coins[0].CoinName),
+  //     fetch("https://api.coinmarketcap.com/v1/ticker/" + this.state.coins[1].CoinName),
+  //     fetch("https://api.coinmarketcap.com/v1/ticker/" + this.state.coins[2].CoinName),
+  //     fetch("https://api.coinmarketcap.com/v1/ticker/" + this.state.coins[3].CoinName),
+  //     fetch("https://api.coinmarketcap.com/v1/ticker/" + this.state.coins[4].CoinName),
+  //     fetch("https://api.coinmarketcap.com/v1/ticker/" + this.state.coins[5].CoinName),
+  //     fetch("https://api.coinmarketcap.com/v1/ticker/" + this.state.coins[6].CoinName),
+  //     fetch("https://api.coinmarketcap.com/v1/ticker/" + this.state.coins[7].CoinName),
+  //     fetch("https://api.coinmarketcap.com/v1/ticker/" + this.state.coins[8].CoinName),
+  //     fetch("https://api.coinmarketcap.com/v1/ticker/" + this.state.coins[9].CoinName),
+  //   ]).then((responseArray) => Promise.all(responseArray.map(item => item.json()))).then((responseJsonArray) => {
+  //     debugger;
+  //     this.setState({
+  //         '1': Numeral(responseJsonArray[0][0].price_usd).format('$0,0.00'),
+  //         '2': Numeral(responseJsonArray[1][0].price_usd).format('$0,0.00'),
+  //         '3': Numeral(responseJsonArray[2][0].price_usd).format('$0,0.00'),
+  //         '4': Numeral(responseJsonArray[3][0].price_usd).format('$0,0.00'),
+  //         '5': Numeral(responseJsonArray[4][0].price_usd).format('$0,0.00'),
+  //         '6': Numeral(responseJsonArray[5][0].price_usd).format('$0,0.00'),
+  //         '7': Numeral(responseJsonArray[6][0].price_usd).format('$0,0.00'),
+  //         '8': Numeral(responseJsonArray[7][0].price_usd).format('$0,0.00'),
+  //         '9': Numeral(responseJsonArray[8][0].price_usd).format('$0,0.00'),
+  //         '10': Numeral(responseJsonArray[9][0].price_usd).format('$0,0.00'),
+  //         refreshing: false
+  //       })
+  //    } 
+  // ).catch((err) => {
+  //       console.log(err);
+  //   });
   }
 
   componentDidMount() {
@@ -178,7 +196,7 @@ class Feed extends Component {
                 avatar={{ uri: coin.ImageUrl }}
                 avatarOverlayContainerStyle={{backgroundColor: 'white'}}
                 title={coin.FullName} 
-                subtitle={this.state[coin.rank]}
+                subtitle={this.state[coin.CoinName]}
                 onPress={() => this.onLearnMore(coin)}
               />
             ))}
