@@ -33,7 +33,7 @@ class CoinDetail extends Component {
 
 	componentWillMount() {
 		this.setState({
-			selectedCoin: this.props.navigation.state.params.CoinName
+			selectedCoin: this.props.navigation.state.params.Name
 		});
 	}
 
@@ -47,14 +47,7 @@ class CoinDetail extends Component {
 	}
 
 	fetchData() {
-		let url = '';
-		if(this.state.selectedCoin === 'Bitcoin Cash / BCC'){
-			url = 'https://api.coinmarketcap.com/v1/ticker/bitcoin-cash';
-		}else if(this.state.selectedCoin === 'DigitalCash'){
-			url = 'https://api.coinmarketcap.com/v1/ticker/dash';
-		} else{
-			url = 'https://api.coinmarketcap.com/v1/ticker/' + this.state.selectedCoin;
-		}
+		let url = 'https://api.coinmarketcap.com/v1/ticker/' + this.state.selectedCoin
 		
 		fetch(url).then(response => response.json())
 			.then(responseJson => {
@@ -76,6 +69,7 @@ class CoinDetail extends Component {
 					lastUpdated: responseJson[0].last_updated,
 					refreshing: false
 				});
+				console.log(responseJson);
 			} 
 			).catch((err) => {
 				console.log(err);
@@ -87,14 +81,14 @@ class CoinDetail extends Component {
 		const {ImageUrl} = this.props.navigation.state.params;
 		const { id, name, symbol, bitfinexPriceBTC, rank, priceUSD, priceBTC, volume24HoursUSD, marketCapUSD,
 			availableSupply, totalSupply, maxSupply,  percentChangeHour,
-			percentChangeDay, percentChangeWeek, lastUpdated} = this.state;
-		if(!this.state.refreshing){
+			percentChangeDay, percentChangeWeek, lastUpdated, refreshing} = this.state;
+		if(!refreshing){
 			return (
 				<ScrollView contentContainerStyle={styles.contentContainer}
 					refreshControl={
 						<RefreshControl
 							refreshing={this.state.refreshing}
-							onRefresh={this.refreshing}
+							onRefresh={this.fetchData}
 						/>
 					}>
 					<Avatar

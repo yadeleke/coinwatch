@@ -11,16 +11,7 @@ class Feed extends Component {
     this.state = {
       selectedCoin: null,
       coins: null,
-      "1" : null,
-      "2" : null,
-      "3" : null,
-      "4" : null,
-      "5" : null,
-      "6" : null,
-      "7" : null,
-      "8" : null,
-      "9" : null,
-     "10" : null,
+      Price: null,
       refreshing: true
     }
     this.fetchData = this.fetchData.bind(this);
@@ -31,7 +22,7 @@ class Feed extends Component {
 
   onLearnMore = (coin) => {
     this.setState({
-      selectedCoin: coin.CoinName
+      selectedCoin: coin.Name
      })
     this.props.navigation.navigate('Details', { ...coin });
   };
@@ -50,6 +41,7 @@ class Feed extends Component {
 						Name: responseJson[key].name,
 						Symbol: responseJson[key].symbol,
             Rank: responseJson[key].rank,
+            Price: responseJson[key].price_usd,
             ImageUrl: null
           })					
         }
@@ -104,38 +96,9 @@ class Feed extends Component {
     if(sortedTopCoins){
       this.setState({
         coins: sortedTopCoins,
+        refreshing: false
       })
     }   
-    Promise.all([
-      fetch("https://api.coinmarketcap.com/v1/ticker/" + this.state.coins[0].Name),
-      fetch("https://api.coinmarketcap.com/v1/ticker/" + this.state.coins[1].Name),
-      // fetch("https://api.coinmarketcap.com/v1/ticker/" + this.state.coins[2].Name),
-      fetch("https://api.coinmarketcap.com/v1/ticker/" + this.state.coins[3].Name),
-      fetch("https://api.coinmarketcap.com/v1/ticker/" + this.state.coins[4].Name),
-      fetch("https://api.coinmarketcap.com/v1/ticker/" + this.state.coins[5].Name),
-      fetch("https://api.coinmarketcap.com/v1/ticker/" + this.state.coins[6].Name),
-      fetch("https://api.coinmarketcap.com/v1/ticker/" + this.state.coins[7].Name),
-      fetch("https://api.coinmarketcap.com/v1/ticker/" + this.state.coins[8].Name),
-      fetch("https://api.coinmarketcap.com/v1/ticker/" + this.state.coins[9].Name),
-    ]).then((responseArray) => Promise.all(responseArray.map(item => item.json()))).then((responseJsonArray) => {
-      this.setState({
-          
-          '1': Numeral(responseJsonArray[0][0].price_usd).format('$0,0.00'),
-          '2': Numeral(responseJsonArray[1][0].price_usd).format('$0,0.00'),
-          '3': Numeral(responseJsonArray[2][0].price_usd).format('$0,0.00'),
-          '4': Numeral(responseJsonArray[3][0].price_usd).format('$0,0.00'),
-          '5': Numeral(responseJsonArray[4][0].price_usd).format('$0,0.00'),
-          '6': Numeral(responseJsonArray[5][0].price_usd).format('$0,0.00'),
-          '7': Numeral(responseJsonArray[6][0].price_usd).format('$0,0.00'),
-          '8': Numeral(responseJsonArray[7][0].price_usd).format('$0,0.00'),
-          '9': Numeral(responseJsonArray[8][0].price_usd).format('$0,0.00'),
-          '10': Numeral(responseJsonArray[9][0].price_usd).format('$0,0.00'),
-          refreshing: false
-        })
-     } 
-  ).catch((err) => {
-        console.log(err);
-    });
   }
 
   componentDidMount() {
@@ -167,7 +130,7 @@ class Feed extends Component {
                 avatar={{ uri: coin.ImageUrl }}
                 avatarOverlayContainerStyle={{backgroundColor: 'white'}}
                 title={coin.Name} 
-                subtitle={this.state[coin.Rank]}
+                subtitle={`${Numeral(coin.Price).format('$0,0.00')}`}
                 onPress={() => this.onLearnMore(coin)}
               />
             ))}
