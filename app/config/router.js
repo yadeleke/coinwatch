@@ -25,6 +25,7 @@ export const FeedStack = StackNavigator({
 					Feed: {
 						screen: Social,
 						navigationOptions: {
+							title: 'Social',
 						},
 					},
 					Twitter: {
@@ -37,6 +38,9 @@ export const FeedStack = StackNavigator({
 						navigationOptions: {
 						},
 					},
+				}, {
+					mode: 'modal',
+					headerMode: 'none',
 				}),
 				navigationOptions: {
 					tabBarLabel: 'Social Media',
