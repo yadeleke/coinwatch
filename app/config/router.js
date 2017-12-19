@@ -2,7 +2,7 @@ import React from 'react';
 import { TabNavigator, StackNavigator} from 'react-navigation';
 
 import Feed from '../screens/Feed';
-import CoinDetail from '../screens/CoinDetail';
+import MarketData from '../screens/MarketData';
 import Social from '../screens/Social';
 
 export const FeedStack = StackNavigator({
@@ -15,7 +15,7 @@ export const FeedStack = StackNavigator({
 	Details: {
 		screen: TabNavigator({
 			Home: {
-				screen: CoinDetail,
+				screen: MarketData,
 				navigationOptions: {
 					tabBarLabel: 'Market Data',
 				},
@@ -29,12 +29,12 @@ export const FeedStack = StackNavigator({
 						},
 					},
 					Twitter: {
-						screen: CoinDetail,
+						screen: Social,
 						navigationOptions: {
 						},
 					},
 					Reddit: {
-						screen: CoinDetail,
+						screen: Social,
 						navigationOptions: {
 						},
 					},
@@ -66,26 +66,6 @@ export const FeedStack = StackNavigator({
 		})
 	},
 });
-
-// export const Tabs = TabNavigator({
-// 	Feed: {
-// 		screen: FeedStack,
-// 		navigationOptions: {
-// 			tabBarLabel: 'Coins',
-// 			tabBarIcon: ({ tintColor }) => <Icon name="list" size={35} color={tintColor} />,
-// 		},
-// 	},
-  
-// });
-
-// export const SettingsStack = StackNavigator({
-//   Settings: {
-//     screen: Settings,
-//     navigationOptions: {
-//       title: 'Settings',
-//     },
-//   },
-// });
 
 export const Root = StackNavigator({
 	// Tabs: {

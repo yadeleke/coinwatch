@@ -5,7 +5,7 @@ import Numeral from 'numeral';
 
 const { height, width } = Dimensions.get('window');
 
-class CoinDetail extends Component {
+class CoinInfo extends Component {
 	constructor(){
 		super();
 		this.state = {
@@ -151,4 +151,4 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default CoinDetail;
+export default CoinInfo;

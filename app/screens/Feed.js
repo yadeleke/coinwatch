@@ -52,6 +52,7 @@ class Feed extends Component {
 	}
 	
 	getAllCoins(coinNames) {
+    //TODO: Get coin description from api 
 		const url = 'https://www.cryptocompare.com/api/data/coinlist/';
 		fetch(url).then(response => response.json())
 			.then(responseJson => {
@@ -86,6 +87,7 @@ class Feed extends Component {
 				if(allCoins[key].Symbol === element.Symbol || allCoins[key].CoinName === element.Name)
 			{
         element.ImageUrl = 'https://www.cryptocompare.com' + allCoins[key].ImageUrl;
+        
 			}	
       })
     }
