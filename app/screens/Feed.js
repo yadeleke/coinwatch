@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text,View, ScrollView, RefreshControl, ActivityIndicator, StyleSheet } from 'react-native';
+import { Text, View, ScrollView, RefreshControl, ActivityIndicator, StyleSheet } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 import Numeral from "numeral";
 

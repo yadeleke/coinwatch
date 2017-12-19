@@ -84,13 +84,7 @@ class CoinInfo extends Component {
 			percentChangeDay, percentChangeWeek, lastUpdated, refreshing} = this.state;
 		if(!refreshing){
 			return (
-				<ScrollView contentContainerStyle={styles.contentContainer}
-					refreshControl={
-						<RefreshControl
-							refreshing={this.state.refreshing}
-							onRefresh={this.fetchData}
-						/>
-					}>
+				<View style={styles.container}>
 					<Avatar
 						containerStyle={{alignSelf: 'center',}}
 						large
@@ -100,38 +94,7 @@ class CoinInfo extends Component {
 						activeOpacity={0.7}
 					/>
 					<Text style={styles.heading}>{name}</Text>
-	
-					<List>
-						<ListItem
-							title={`Market Rank: #${rank}`}
-							hideChevron
-						/>
-						<ListItem
-							title={`Price (USD): ${Numeral(priceUSD).format('$0,0.00')}`}
-							hideChevron
-						/>
-						<ListItem
-							title={`Price (BTC): ${priceBTC}`}
-							hideChevron
-						/>
-						<ListItem
-							title={`24h Volume (USD): ${Numeral(volume24HoursUSD).format('$0,0.00')}`}
-							hideChevron
-						/>
-						<ListItem
-							title={`Percent Change (Hour): ${percentChangeHour}%`}
-							hideChevron
-						/>
-						<ListItem
-							title={`Percent Change (Day): ${percentChangeDay}%`}
-							hideChevron
-						/>
-						<ListItem
-							title={`Percent Change (Week): ${percentChangeWeek}%`}
-							hideChevron
-						/>
-					</List>
-				</ScrollView>
+				</View>
 			);
 		}
 		
@@ -139,7 +102,7 @@ class CoinInfo extends Component {
 }
 
 const styles = StyleSheet.create({
-	contentContainer: {
+	container: {
 		flex: 1,
 		paddingVertical: 20,
 		backgroundColor: 'white',

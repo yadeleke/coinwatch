@@ -6,13 +6,13 @@ class Feed extends Component {
 	constructor(){
 		super();
 		this.state = {
-			coin: null,
+			coinName: null,
 		};
 	}
 
 	componentWillMount() {
 		this.setState({
-			coin: this.props.navigation.state.params.CoinName
+			coinName: this.props.navigation.state.params.name
 		});
 	}
 
@@ -24,7 +24,7 @@ class Feed extends Component {
 	  this.props.navigation.navigate('Reddit', {coin});
 	}
 	render() {
-		const {coin} = this.state;
+		const {CoinName} = this.state;
 		return (
 			<ScrollView>
 				<List>
@@ -33,7 +33,7 @@ class Feed extends Component {
 						avatar={require('../../img/twitter.png')}
 						avatarOverlayContainerStyle={{backgroundColor: 'white'}}
 						title='Twitter'
-						subtitle={coin}
+						subtitle={CoinName}
 						onPress={() => this.showTwitter({coin})}
 					/>
 					<ListItem
@@ -41,7 +41,7 @@ class Feed extends Component {
 						avatar={require('../../img/reddit.png')}
 						avatarOverlayContainerStyle={{backgroundColor: 'white'}}
 						title='Reddit'
-						subtitle={coin}
+						subtitle={CoinName}
 						onPress={() => this.showReddit({coin})}
 					/>
 					<ListItem

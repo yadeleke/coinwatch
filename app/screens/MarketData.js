@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import { ScrollView, Dimensions, StyleSheet, Text, Platform, RefreshControl} from 'react-native';
-import { List, ListItem, Avatar, View } from 'react-native-elements';
+import { View, ScrollView, Dimensions, StyleSheet, Text, Platform, RefreshControl, ActivityIndicator} from 'react-native';
+import { List, ListItem, Avatar} from 'react-native-elements';
 import Numeral from 'numeral';
+
+import { Divider, Caption} from '@shoutem/ui';
+
+import RowTwoColumns from '../components/RowTwoColumns';
 
 const { height, width } = Dimensions.get('window');
 
@@ -35,6 +39,7 @@ class MarketData extends Component {
 		this.setState({
 			selectedCoin: this.props.navigation.state.params.Name
 		});
+		this.fetchData();
 	}
 
 	componentDidMount() {
@@ -82,73 +87,81 @@ class MarketData extends Component {
 		const { id, name, symbol, bitfinexPriceBTC, rank, priceUSD, priceBTC, volume24HoursUSD, marketCapUSD,
 			availableSupply, totalSupply, maxSupply,  percentChangeHour,
 			percentChangeDay, percentChangeWeek, lastUpdated, refreshing} = this.state;
-		if(!refreshing){
+		if(!refreshing && id){
 			return (
-				<ScrollView contentContainerStyle={styles.contentContainer}
+				<ScrollView contentContainerStyle={styles.container}
 					refreshControl={
 						<RefreshControl
 							refreshing={this.state.refreshing}
 							onRefresh={this.fetchData}
 						/>
 					}>
+
 					<Avatar
-						containerStyle={{alignSelf: 'center',}}
+						containerStyle={{alignSelf: 'center', marginVertical: 10}}
 						large
 						rounded
 						overlayContainerStyle={{backgroundColor: 'white'}}
 						source={{ uri: ImageUrl}}
 						activeOpacity={0.7}
 					/>
-					<Text style={styles.heading}>{name}</Text>
+					<Divider styleName="section-header">
+  						<Caption>{name}</Caption>
+					</Divider>
 	
-					<List>
-						<ListItem
-							title={`Market Rank: #${rank}`}
-							hideChevron
-						/>
-						<ListItem
-							title={`Price (USD): ${Numeral(priceUSD).format('$0,0.00')}`}
-							hideChevron
-						/>
-						<ListItem
-							title={`Price (BTC): ${priceBTC}`}
-							hideChevron
-						/>
-						<ListItem
-							title={`24h Volume (USD): ${Numeral(volume24HoursUSD).format('$0,0.00')}`}
-							hideChevron
-						/>
-						<ListItem
-							title={`Percent Change (Hour): ${percentChangeHour}%`}
-							hideChevron
-						/>
-						<ListItem
-							title={`Percent Change (Day): ${percentChangeDay}%`}
-							hideChevron
-						/>
-						<ListItem
-							title={`Percent Change (Week): ${percentChangeWeek}%`}
-							hideChevron
-						/>
-					</List>
+					<Divider styleName="line" />
+
+					<RowTwoColumns label="Market Rank:" value={`#${rank}`} />
+
+					<Divider styleName="line" />
+
+					<RowTwoColumns label="Price (USD):" value={Numeral(priceUSD).format('$0,0.00')} />
+
+					<Divider styleName="line" />
+
+					<RowTwoColumns label="Price (BTC):" value={`${priceBTC} BTC`} />
+
+					<Divider styleName="line" />
+
+					<RowTwoColumns label="24h Volume (USD):" value={Numeral(volume24HoursUSD).format('$0,0.00')} />
+
+					<Divider styleName="line" />
+
+					<RowTwoColumns label="Percent Change (Hour):" value={`${percentChangeHour}%`}/>
+
+					<Divider styleName="line" />
+
+					<RowTwoColumns label="Percent Change (Day):" value={`${percentChangeDay}%`} />
+
+					<Divider styleName="line" />
+
+					<RowTwoColumns label="Percent Change (Week):" value={`${percentChangeWeek}%`} />
+
 				</ScrollView>
 			);
+		} else {
+			return (
+				<View style={[styles.container, styles.horizontal]}>
+				  <ActivityIndicator size="large" color="#0000ff" />
+				</View>
+			  )
 		}
 		
 	}
 }
 
 const styles = StyleSheet.create({
-	contentContainer: {
+	container: {
 		flex: 1,
-		paddingVertical: 20,
 		backgroundColor: 'white',
+		justifyContent: 'center'
 	},
-	heading: {
-		fontFamily: (Platform.OS === 'ios' ) ? 'HelveticaNeue' : 'sans-serif',
-		fontSize: 30,
-		alignSelf: 'center'
-	}
+	horizontal: {
+		flexDirection: 'row',
+		justifyContent: 'space-around',
+		padding: 10
+	  }
+
 });
 
 export default MarketData;
