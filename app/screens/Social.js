@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {ScrollView} from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 
-class Feed extends Component {
+export default class Social extends Component {
 	constructor(){
 		super();
 		this.state = {
@@ -57,5 +57,3 @@ class Feed extends Component {
 		);
 	}
 }
-
-export default Feed;

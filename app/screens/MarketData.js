@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, StyleSheet, RefreshControl, ActivityIndicator} from 'react-native';
+import { View, ScrollView, StyleSheet, RefreshControl, ActivityIndicator, Text } from 'react-native';
 import { Avatar} from 'react-native-elements';
 import Numeral from 'numeral';
 
@@ -12,45 +12,25 @@ export default class MarketData extends Component {
 		super(props);
 		this.state = {
 			selectedCoin: null,
-			id: null,
-			name: null,
-			symbol: null,
-			rank: null,
-			priceUSD: null, 
-			priceBTC: null, 
-			volume24HoursUSD: null, 
-			marketCapUSD: null, 
-			availableSupply: null, 
-			totalSupply: null, 
-			maxSupply: null, 
-			percentChangeHour: null, 
-			percentChangeDay: null, 
-			percentChangeWeek: null, 
-			imageUrl: null,
+			id: props.navigation.state.params.id,
+			name: props.navigation.state.params.name,
+			symbol: props.navigation.state.params.symbol,
+			rank: props.navigation.state.params.rank,
+			priceUSD: props.navigation.state.params.priceUSD, 
+			priceBTC: props.navigation.state.params.priceBTC, 
+			volume24HoursUSD: props.navigation.state.params.volume24HoursUSD, 
+			marketCapUSD: props.navigation.state.params.marketCapUSD, 
+			availableSupply: props.navigation.state.params.availableSupply, 
+			totalSupply: props.navigation.state.params.totalSupply, 
+			maxSupply: props.navigation.state.params.maxSupply, 
+			percentChangeHour: props.navigation.state.params.percentChangeHour, 
+			percentChangeDay: props.navigation.state.params.percentChangeDay, 
+			percentChangeWeek: props.navigation.state.params.percentChangeWeek, 
+			imageUrl: props.navigation.state.params.imageUrl,
 			refreshing: false
 		};
 		this.fetchData = this.fetchData.bind(this);
 		this.refreshing = this.refreshing.bind(this);
-	}
-
-	componentWillMount() {
-		this.setState({
-			id: this.props.navigation.state.params.id,
-			name: this.props.navigation.state.params.name,
-			symbol: this.props.navigation.state.params.symbol,
-			rank: this.props.navigation.state.params.rank,
-			priceUSD: this.props.navigation.state.params.priceUSD, 
-			priceBTC: this.props.navigation.state.params.priceBTC, 
-			volume24HoursUSD: this.props.navigation.state.params.volume24HoursUSD, 
-			marketCapUSD: this.props.navigation.state.params.marketCapUSD, 
-			availableSupply: this.props.navigation.state.params.availableSupply, 
-			totalSupply: this.props.navigation.state.params.totalSupply, 
-			maxSupply: this.props.navigation.state.params.maxSupply, 
-			percentChangeHour: this.props.navigation.state.params.percentChangeHour, 
-			percentChangeDay: this.props.navigation.state.params.percentChangeDay, 
-			percentChangeWeek: this.props.navigation.state.params.percentChangeWeek, 
-			imageUrl: this.props.navigation.state.params.imageUrl,
-		});
 	}
 
 	componentDidMount() {
@@ -108,9 +88,7 @@ export default class MarketData extends Component {
 						source={{ uri: imageUrl}}
 						activeOpacity={0.7}
 					/>
-					<Divider styleName="section-header">
-  						<Caption>{name}</Caption>
-					</Divider>
+					<Text style={styles.heading}>{name}</Text>
 	
 					<Divider styleName="line" />
 
@@ -163,7 +141,10 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-around',
 		padding: 10
+	},
+	heading: {
+		fontSize: 30,
+		alignSelf: 'center'
 	}
-
 });
 

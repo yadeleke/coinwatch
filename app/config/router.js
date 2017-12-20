@@ -1,10 +1,17 @@
 import React from 'react';
-import { TabNavigator, StackNavigator} from 'react-navigation';
+import { TabNavigator, StackNavigator, TabBarTop} from 'react-navigation';
+import { Icon } from 'react-native-elements'
 
 import Feed from '../screens/Feed';
 import MarketData from '../screens/MarketData';
 import CoinInfo from '../screens/CoinInfo';
 import Social from '../screens/Social';
+
+const indicatorStyle = (props, alignSelf) => ({
+	backgroundColor: props.activeTintColor,
+	height: 4,
+	alignSelf: 'flex-end',
+});
 
 export const FeedStack = StackNavigator({
 	Feed: {
@@ -15,54 +22,77 @@ export const FeedStack = StackNavigator({
 	},
 	Details: {
 		screen: TabNavigator({
-			Home: {
+			MarketData: {
 				screen: MarketData,
 				navigationOptions: {
-					tabBarLabel: 'Market Data',
+					tabBarIcon:
+						<Icon
+							name='line-chart' 
+							type='font-awesome'
+							color='white'
+						/>
 				},
 			},
 			Information: {
 				screen: StackNavigator({
-					Feed: {
+					Learn: {
 						screen: CoinInfo,
-						navigationOptions: {
-							title: 'Details',
-						},
-					},
-					Twitter: {
-						screen: Social,
-						navigationOptions: {
-						},
-					},
-					Reddit: {
-						screen: Social,
-						navigationOptions: {
-						},
 					},
 				}, {
 					mode: 'modal',
 					headerMode: 'none',
 				}),
 				navigationOptions: {
-					tabBarLabel: 'Social Media',
+					tabBarIcon:
+						<Icon
+							name='info-circle' 
+							type='font-awesome'
+							color='white'
+						/>
 				},
 			},
-      
+			News: {
+				screen: StackNavigator({
+					Twitter: {
+						screen: Social,
+					},
+					Reddit: {
+						screen: Social,
+					},
+				}, {
+					mode: 'modal',
+					headerMode: 'none',
+				}),
+				navigationOptions: {
+					tabBarIcon:
+						<Icon
+							name='newspaper-o' 
+							type='font-awesome'
+							color='white'
+						/>
+				},
+
+			}
 		}, 
 		{
+			tabBarComponent: (props)=> <TabBarTop {...props} indicatorStyle={indicatorStyle(props, 'flex-end')} />,
 			swipeEnabled: true,
-			tabBarPosition: 'bottom',
+			tabBarPosition: 'top',
 			tabBarOptions: {
+				showIcon: true,
 				activeTintColor: 'white',
 				activeBackgroundColor: '#009374',
-				labelStyle: {
-					fontSize: 16,
-					padding: 10,
-					color: 'white'
-				},
+				showLabel: false,
 				style: {
 					backgroundColor: '#24B69C',
 				},
+				iconStyle: {
+					width: 35,
+					height: 60
+				},
+				tabStyle: {
+					height: 40
+				}
 			}
 		})
 	},

@@ -44,6 +44,7 @@ export default class RowTwoColumns extends Component {
 
 const styles = StyleSheet.create({
 	row: {
+		backgroundColor: 'white',
 		display: 'flex',
 		flex: 1,
 		flexDirection: 'row',
