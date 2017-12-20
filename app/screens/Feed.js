@@ -3,15 +3,12 @@ import { Text, View, ScrollView, RefreshControl, ActivityIndicator, StyleSheet }
 import { List, ListItem } from 'react-native-elements';
 import Numeral from "numeral";
 
-// import { coins } from '../config/data';
-
-class Feed extends Component {
-  constructor(){
-    super();
+export default class Feed extends Component {
+  constructor(props){
+    super(props);
     this.state = {
       selectedCoin: null,
       coins: null,
-      Price: null,
       refreshing: true
     }
     this.fetchData = this.fetchData.bind(this);
@@ -21,9 +18,6 @@ class Feed extends Component {
   }
 
   onLearnMore = (coin) => {
-    this.setState({
-      selectedCoin: coin.Name
-     })
     this.props.navigation.navigate('Details', { ...coin });
   };
 
@@ -38,11 +32,21 @@ class Feed extends Component {
 						continue;
 					}
 					coinNames.push({
-						Name: responseJson[key].name,
-						Symbol: responseJson[key].symbol,
-            Rank: responseJson[key].rank,
-            Price: responseJson[key].price_usd,
-            ImageUrl: null
+						id: responseJson[key].id,
+						name: responseJson[key].name,
+						symbol: responseJson[key].symbol,
+            rank: responseJson[key].rank,
+				  	priceUSD: responseJson[key].price_usd, 
+            priceBTC: responseJson[key].price_btc, 
+            volume24HoursUSD: responseJson[key]['24h_volume_usd'], 
+            marketCapUSD: responseJson[key].market_cap_usd, 
+            availableSupply: responseJson[key].available_supply, 
+            totalSupply: responseJson[key].total_supply, 
+            maxSupply: responseJson[key].max_supply, 
+            percentChangeHour: responseJson[key].percent_change_1h, 
+            percentChangeDay: responseJson[key].percent_change_24h, 
+            percentChangeWeek: responseJson[key].percent_change_7d, 
+            imageUrl: null
           })					
         }
         return coinNames;
@@ -52,16 +56,15 @@ class Feed extends Component {
 	}
 	
 	getAllCoins(coinNames) {
-    //TODO: Get coin description from api 
 		const url = 'https://www.cryptocompare.com/api/data/coinlist/';
 		fetch(url).then(response => response.json())
 			.then(responseJson => {
         return [coinNames,responseJson['Data']];  
 			}).then( arr => this.createDataStructure(arr)).then(topCoins => {
 				let sortedTopCoins = topCoins.sort(function compare(a,b) {
-					if (Number(a.Rank) < Number(b.Rank)){
+					if (Number(a.rank) < Number(b.rank)){
 						return -1;
-					}else if (Number(a.Rank) > Number(b.Rank)){
+					}else if (Number(a.rank) > Number(b.rank)){
 						return 1;
 					} else {
 						return 0;
@@ -84,10 +87,10 @@ class Feed extends Component {
 				continue;
 			}
 			coinNames.forEach((element) => {
-				if(allCoins[key].Symbol === element.Symbol || allCoins[key].CoinName === element.Name)
+				if(allCoins[key].Symbol === element.symbol || allCoins[key].CoinName === element.name)
 			{
-        element.ImageUrl = 'https://www.cryptocompare.com' + allCoins[key].ImageUrl;
-        
+        element.imageUrl = 'https://www.cryptocompare.com' + allCoins[key].ImageUrl;
+        element.id = allCoins[key].Id;
 			}	
       })
     }
@@ -127,12 +130,12 @@ class Feed extends Component {
           <List>
             {coins.map((coin) => (
               <ListItem
-                key={coin.Symbol}
+                key={coin.symbol}
                 roundAvatar
-                avatar={{ uri: coin.ImageUrl }}
+                avatar={{ uri: coin.imageUrl }}
                 avatarOverlayContainerStyle={{backgroundColor: 'white'}}
-                title={coin.Name} 
-                subtitle={`${Numeral(coin.Price).format('$0,0.00')}`}
+                title={coin.name} 
+                subtitle={`${Numeral(coin.priceUSD).format('$0,0.00')}`}
                 onPress={() => this.onLearnMore(coin)}
               />
             ))}
@@ -155,5 +158,3 @@ const styles = StyleSheet.create({
     padding: 10
   }
 })
-
-export default Feed;

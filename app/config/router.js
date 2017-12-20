@@ -3,6 +3,7 @@ import { TabNavigator, StackNavigator} from 'react-navigation';
 
 import Feed from '../screens/Feed';
 import MarketData from '../screens/MarketData';
+import CoinInfo from '../screens/CoinInfo';
 import Social from '../screens/Social';
 
 export const FeedStack = StackNavigator({
@@ -20,12 +21,12 @@ export const FeedStack = StackNavigator({
 					tabBarLabel: 'Market Data',
 				},
 			},
-			Social: {
+			Information: {
 				screen: StackNavigator({
 					Feed: {
-						screen: Social,
+						screen: CoinInfo,
 						navigationOptions: {
-							title: 'Social',
+							title: 'Details',
 						},
 					},
 					Twitter: {
@@ -68,9 +69,6 @@ export const FeedStack = StackNavigator({
 });
 
 export const Root = StackNavigator({
-	// Tabs: {
-	//   screen: Tabs,
-	// },
 	FeedStack: {
 		screen: FeedStack,
 	},

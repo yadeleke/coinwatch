@@ -1,75 +1,47 @@
 import React, { Component } from 'react';
-import { ScrollView, Dimensions, StyleSheet, Text, Platform, RefreshControl} from 'react-native';
-import { List, ListItem, Avatar, View } from 'react-native-elements';
-import Numeral from 'numeral';
+import { StyleSheet, Text, Platform } from 'react-native';
+import { Avatar, View } from 'react-native-elements';
 
-const { height, width } = Dimensions.get('window');
-
-class CoinInfo extends Component {
-	constructor(){
-		super();
+export default class CoinInfo extends Component {
+	constructor(props){
+		super(props);
 		this.state = {
-			selectedCoin: null,
 			id: null, 
-			name: null, 
-			symbol: null, 
-			rank: null, 
-			priceUSD: null, 
-			priceBTC: null, 
-			volume24HoursUSD: null, 
-			marketCapUsd: null, 
-			availableSupply: null, 
-			totalSupply: null, 
-			maxSupply: null, 
-			percentChangeHour: null, 
-			percentChangeDay: null, 
-			percentChangeWeek: null, 
-			lastUpdated: null,
-			refreshing: false
+			name: null,
+			imageUrl: null,
+			description: null,
+			features: null,
+			technology: null,
+			twitter: null,
+			websiteLink: null,
+			whitepaperLink: null
 		};
 		this.fetchData = this.fetchData.bind(this);
-		this.refreshing = this.refreshing.bind(this);
 	}
 
 	componentWillMount() {
 		this.setState({
-			selectedCoin: this.props.navigation.state.params.Name
+			id: this.props.navigation.state.params.id,
+			name: this.props.navigation.state.params.name,
+			imageUrl: this.props.navigation.state.params.imageUrl
 		});
 	}
 
-	componentDidMount() {
-		this.fetchData();
-	}
-  
-	refreshing() {
-		this.setState({refreshing: true});
-		this.fetchData();
-	}
-
 	fetchData() {
-		let url = 'https://api.coinmarketcap.com/v1/ticker/' + this.state.selectedCoin
+		let url = 'https://www.cryptocompare.com/api/data/coinsnapshotfullbyid/?id=' + this.state.id;
 		
 		fetch(url).then(response => response.json())
 			.then(responseJson => {
-				this.setState({
-					id: responseJson[0].id, 
-					name: responseJson[0].name, 
-					symbol: responseJson[0].symbol, 
-					rank: responseJson[0].rank, 
-					priceUSD: responseJson[0].price_usd, 
-					priceBTC: responseJson[0].price_btc, 
-					volume24HoursUSD: responseJson[0]['24h_volume_usd'], 
-					marketCapUSD: responseJson[0].market_cap_usd, 
-					availableSupply: responseJson[0].available_supply, 
-					totalSupply: responseJson[0].total_supply, 
-					maxSupply: responseJson[0].max_supply, 
-					percentChangeHour: responseJson[0].percent_change_1h, 
-					percentChangeDay: responseJson[0].percent_change_24h, 
-					percentChangeWeek: responseJson[0].percent_change_7d, 
-					lastUpdated: responseJson[0].last_updated,
-					refreshing: false
-				});
 				console.log(responseJson);
+				this.setState({
+					description: null,
+					features: null,
+					technology: null,
+					twitter: null,
+					websiteLink: null,
+					whitepaperLink: null
+				});
+				
 			} 
 			).catch((err) => {
 				console.log(err);
@@ -78,25 +50,20 @@ class CoinInfo extends Component {
 
 
 	render() {
-		const {ImageUrl} = this.props.navigation.state.params;
-		const { id, name, symbol, bitfinexPriceBTC, rank, priceUSD, priceBTC, volume24HoursUSD, marketCapUSD,
-			availableSupply, totalSupply, maxSupply,  percentChangeHour,
-			percentChangeDay, percentChangeWeek, lastUpdated, refreshing} = this.state;
-		if(!refreshing){
-			return (
-				<View style={styles.container}>
-					<Avatar
-						containerStyle={{alignSelf: 'center',}}
-						large
-						rounded
-						overlayContainerStyle={{backgroundColor: 'white'}}
-						source={{ uri: ImageUrl}}
-						activeOpacity={0.7}
-					/>
-					<Text style={styles.heading}>{name}</Text>
-				</View>
-			);
-		}
+		const { name, imageUrl} = this.state;
+		return (
+			<View style={styles.container}>
+				<Avatar
+					containerStyle={{alignSelf: 'center',}}
+					large
+					rounded
+					overlayContainerStyle={{backgroundColor: 'white'}}
+					source={{ uri: imageUrl}}
+					activeOpacity={0.7}
+				/>
+				<Text style={styles.heading}>{name}</Text>
+			</View>
+		);
 		
 	}
 }
@@ -113,5 +80,3 @@ const styles = StyleSheet.create({
 		alignSelf: 'center'
 	}
 });
-
-export default CoinInfo;
